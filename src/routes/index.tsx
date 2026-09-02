@@ -1,24 +1,60 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
+import { SiteHeader } from "@/components/site-header";
+import { AdSlot } from "@/components/ad-slot";
+import { ProductCard } from "@/components/product-card";
+import { announcements, products } from "@/data/catalog";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Game Market — متجر حسابات وشحن الألعاب" },
+      {
+        name: "description",
+        content: "متجر عربي لحسابات الألعاب وبطاقات الشحن والاشتراكات مع تسليم سريع وآمن.",
+      },
+      { property: "og:title", content: "Game Market — متجر حسابات وشحن الألعاب" },
+      {
+        property: "og:description",
+        content: "تصفح حسابات PUBG Mobile و Free Fire وباقات الشحن والاشتراكات.",
+      },
+    ],
+  }),
+  component: HomePage,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function HomePage() {
+  const [query, setQuery] = useState("");
+
+  const list = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const available = products.filter((p) => p.status === "available");
+    if (!q) return available;
+    return available.filter(
+      (p) => p.title.toLowerCase().includes(q) || p.gameType.toLowerCase().includes(q),
+    );
+  }, [query]);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <SiteHeader query={query} onQueryChange={setQuery} />
+
+      <main className="mx-auto w-full max-w-6xl space-y-6 px-4 py-6 pb-16">
+        <h1 className="sr-only">Game Market — متجر الألعاب</h1>
+        <AdSlot announcement={announcements.find((a) => a.active)} />
+
+        <section aria-label="المنتجات">
+          {list.length === 0 ? (
+            <p className="py-16 text-center text-sm text-muted-foreground">لا توجد نتائج مطابقة.</p>
+          ) : (
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+              {list.map((product) => (
+                <ProductCard key={product.slug} product={product} />
+              ))}
+            </div>
+          )}
+        </section>
+      </main>
     </div>
   );
 }
