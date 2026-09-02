@@ -2,7 +2,7 @@ import { Megaphone } from "lucide-react";
 import type { Announcement } from "@/data/catalog";
 
 /** Admin-managed announcement space. Data comes from the ads table later. */
-export function AdSlot({ announcement }: { announcement?: Announcement }) {
+export function AdSlot({ announcement }: { announcement?: Announcement | undefined }) {
   if (!announcement || !announcement.active) return null;
 
   return (
