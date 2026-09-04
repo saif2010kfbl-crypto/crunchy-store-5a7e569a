@@ -37,15 +37,31 @@ export const Route = createFileRoute("/p/$slug")({
 function ProductPage() {
   const { product, related } = Route.useLoaderData();
   const detailsRef = useRef<HTMLDivElement>(null);
-  const [scrolled, setScrolled] = useState(false);
+  // 0 = details fully visible, 1 = fully faded. Driven continuously by scroll
+  // position so the details fade gradually instead of snapping away.
+  const [progress, setProgress] = useState(0);
   const sold = product.status === "sold";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 180);
+    let raf = 0;
+    const FADE_START = 120;
+    const FADE_END = 520;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        setProgress(Math.min(1, Math.max(0, (y - FADE_START) / (FADE_END - FADE_START))));
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
+
+  const scrolled = progress >= 1;
 
   return (
     <div className="min-h-screen bg-background pb-28">
