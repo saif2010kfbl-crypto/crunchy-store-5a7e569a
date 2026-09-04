@@ -1,14 +1,36 @@
-# Welcome to your Lovable project
+# Crunchy Store
+
+ابنِ الآن النسخة الأولى الفعلية لمتجر ألعاب عربي RTL باسم مؤقت "Game Market". نريد تطبيق Full-stack قابل للتوسع، لكن هذه المرحلة تركّز على واجهة المستخدم وصفحة المنتج مع بيانات تجريبية محلية، وبنية واضحة لاحقًا للإدارة/قاعدة البيانات/Telegram.
+
+التصميم المطلوب: Dark mode أساسي بخلفية سوداء/شبه سوداء ونص فاتح، وLight mode بخلفية بيضاء ونص داكن، مع نفس التدرج الداكن للعناصر وعدم الإكثار من الألوان. دعم الهاتف أولًا ثم سطح المكتب.
+
+الصفحات العامة:
+1) الرئيسية: هيدر بسيط، بحث، تبديل Light/Dark، تنقل بين الرئيسية والألعاب وتم بيعها، مساحة إعلان إداري تجريبية قابلة للإدارة مستقبلًا، ثم شبكة منتجات. 3 أعمدة على desktop، عمودان على mobile. البطاقات مختصرة وتعرض الصورة/السعر/نوع اللعبة فقط مع مشاركة. لا تعرض أبدًا رقم #111 للمستخدم. أضف glow أصفر خفيف جدًا حول البطاقة كلمسة بصرية، وليس إطارًا أصفر سميكًا. زر الشراء برتقالي عند الحاجة.
+2) الألعاب: واجهة أقسام ديناميكية تجريبية مثل PUBG Mobile وFree Fire والشحن والاشتراكات. صمّمها بحيث يمكن لاحقًا أن تتحكم بها الإدارة بالكامل بإضافة/تعديل/حذف الأقسام.
+3) تم بيعها: منتجات SOLD مع شارة حمراء وتعطيل الشراء.
+4) صفحة تفاصيل المنتج: سهم رجوع أبيض داخل دائرة واضحة في أحد طرفي الهيدر. الطرف المقابل اتركه لموضع قائمة الإدارة المخفية مستقبلًا ولا تظهر للمستخدم العادي. معرض صور كبير مع أسهم صغيرة نسبيًا على الحواف، نقاط بعدد الصور، السحب والضغط على النقاط، وتكبير الصورة. اعرض السعر ونوع المنتج وطريقة التحويل وطريقة الشراء. الوصف داخل صندوق رفيع بزوايا دائرية ناعمة جدًا. زر شراء برتقالي.
+5) عند النزول في صفحة التفاصيل، تتلاشى معلومات المنتج تدريجيًا وتظهر منتجات ذات صلة، مع زر شراء المنتج الحالي sticky في أسفل الشاشة. عند العودة للأعلى تعود التفاصيل. اجعل الحركة سلسة وغير مزعجة.
+6) المشاركة: زر مشاركة أخضر/متناسق، ينسخ رابط المنتج ويفتح مشاركة مناسبة. استخدم رابطًا دائمًا قائمًا على معرف عام/slug، وليس #111.
+
+بيانات تجريبية: أنشئ عدة منتجات متنوعة لتوضيح الشبكة والمعرض، مع placeholders أنيقة للصور إذا لم توجد صور فعلية. لا تستخدم صورًا خارجية ضرورية.
+
+مهم جدًا للأمان والتصميم: #111 معرف داخلي فقط. لا ترسله أو تعرضه في بيانات العميل العامة. المعلومات السرية مثل اسم صاحب الحساب والنقاط لا تدخل أصلًا في payload العام.
+
+المشروع يجب أن يكون منظمًا بمكونات قابلة لإعادة الاستخدام، وبنية جاهزة لإضافة لاحقًا: Admin Dashboard منفصلة ومحمية، Owner وModerators بصلاحيات، إدارة المنتجات/الأقسام/الإعلانات/الطلبات، قاعدة بيانات، Telegram Mini App، وبوت Telegram. لا تنشئ دفعًا حقيقيًا الآن.
+
+نظام الإدارة الذي سنضيفه لاحقًا: Owner يمكنه إضافة Owner آخر بنفس الصلاحيات، إدارة المشرفين، إعطاء/إزالة الصلاحيات، والتخلي عن منصب Owner وفق تدفق آمن. لا نستخدم كود 8 أو 14 رقمًا ثابتًا كحماية؛ إذا احتجنا كود دعوة لاحقًا يكون لمرة واحدة ومرتبطًا بهوية Telegram/حساب موثّق. هوية Moderator في الموقع يجب أن تكون نفس Telegram user ID حتى تتزامن صلاحيات الموقع والبوت.
+
+نفّذ الواجهة بجودة عالية واهتم بالـresponsive، RTL، المسافات، التباين، rounded corners، وحالات hover/focus/accessibility. لا تزدحم الصفحة. الأولوية: الصورة ثم السعر ثم المعلومات ثم الشراء.
 
 This project was built with [Lovable](https://lovable.dev).
 
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/44999b6c-1e57-426b-b3c6-401b2d6df5b5).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +42,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
