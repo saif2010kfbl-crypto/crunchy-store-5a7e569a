@@ -8,13 +8,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/games")({
   head: () => ({
     meta: [
-      { title: "الألعاب — Game Market" },
+      { title: "الألعاب — Crunchy Store" },
       {
         name: "description",
         content: "أقسام الألعاب: PUBG Mobile، Free Fire، الشحن، والاشتراكات.",
       },
-      { property: "og:title", content: "الألعاب — Game Market" },
-      { property: "og:description", content: "تصفح المنتجات حسب القسم في متجر Game Market." },
+      { property: "og:title", content: "الألعاب — Crunchy Store" },
+      { property: "og:description", content: "تصفح المنتجات حسب القسم في متجر Crunchy Store." },
     ],
   }),
   component: GamesPage,

@@ -25,7 +25,7 @@ export function SiteHeader({ query, onQueryChange }: Props) {
             <span className="grid size-9 shrink-0 place-items-center rounded-2xl bg-surface-2 text-foreground">
               <Gamepad2 className="size-4" />
             </span>
-            <span className="truncate text-lg font-extrabold tracking-tight">Game Market</span>
+            <span className="truncate text-lg font-extrabold tracking-tight">Crunchy Store</span>
           </Link>
           <ThemeToggle />
         </div>

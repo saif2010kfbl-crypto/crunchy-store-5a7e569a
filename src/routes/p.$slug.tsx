@@ -87,11 +87,11 @@ function ProductPage() {
         <div
           ref={detailsRef}
           style={{
-            opacity: scrolled ? 0 : 1,
-            transform: scrolled ? "translateY(-8px)" : "none",
-            pointerEvents: scrolled ? "none" : "auto",
+            opacity: 1 - progress,
+            transform: `translateY(${-16 * progress}px)`,
+            pointerEvents: progress > 0.6 ? "none" : "auto",
           }}
-          className="space-y-4 transition-all duration-500 ease-out"
+          className="space-y-4 will-change-transform"
         >
           <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
             <div className="min-w-0">
@@ -122,8 +122,8 @@ function ProductPage() {
 
         <section
           aria-label="منتجات ذات صلة"
-          style={{ opacity: scrolled ? 1 : 0.35 }}
-          className="space-y-3 transition-opacity duration-500 ease-out"
+          style={{ opacity: 0.35 + 0.65 * progress }}
+          className="space-y-3"
         >
           <h2 className="text-base font-extrabold tracking-tight">منتجات ذات صلة</h2>
           <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">

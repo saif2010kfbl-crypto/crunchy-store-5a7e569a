@@ -6,9 +6,9 @@ import { products } from "@/data/catalog";
 export const Route = createFileRoute("/sold")({
   head: () => ({
     meta: [
-      { title: "تم بيعها — Game Market" },
-      { name: "description", content: "أرشيف المنتجات التي تم بيعها في متجر Game Market." },
-      { property: "og:title", content: "تم بيعها — Game Market" },
+      { title: "تم بيعها — Crunchy Store" },
+      { name: "description", content: "أرشيف المنتجات التي تم بيعها في متجر Crunchy Store." },
+      { property: "og:title", content: "تم بيعها — Crunchy Store" },
       { property: "og:description", content: "منتجات مباعة لم تعد متاحة للشراء." },
     ],
   }),

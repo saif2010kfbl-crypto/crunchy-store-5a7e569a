@@ -8,12 +8,12 @@ import { announcements, products } from "@/data/catalog";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Game Market — متجر حسابات وشحن الألعاب" },
+      { title: "Crunchy Store — متجر حسابات وشحن الألعاب" },
       {
         name: "description",
         content: "متجر عربي لحسابات الألعاب وبطاقات الشحن والاشتراكات مع تسليم سريع وآمن.",
       },
-      { property: "og:title", content: "Game Market — متجر حسابات وشحن الألعاب" },
+      { property: "og:title", content: "Crunchy Store — متجر حسابات وشحن الألعاب" },
       {
         property: "og:description",
         content: "تصفح حسابات PUBG Mobile و Free Fire وباقات الشحن والاشتراكات.",
@@ -40,7 +40,7 @@ function HomePage() {
       <SiteHeader query={query} onQueryChange={setQuery} />
 
       <main className="mx-auto w-full max-w-6xl space-y-6 px-4 py-6 pb-16">
-        <h1 className="sr-only">Game Market — متجر الألعاب</h1>
+        <h1 className="sr-only">Crunchy Store — متجر الألعاب</h1>
         <AdSlot announcement={announcements.find((a) => a.active)} />
 
         <section aria-label="المنتجات">
