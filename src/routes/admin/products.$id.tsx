@@ -61,7 +61,7 @@ function AdminProductEdit() {
     const idx = items.findIndex((m) => m.id === id);
     const target = idx + dir;
     if (idx < 0 || target < 0 || target >= items.length) return;
-    [items[idx], items[target]] = [items[target], items[idx]];
+    const a = items[idx]; const b = items[target]; if (a && b) { items[idx] = b; items[target] = a; }
     set(
       "media",
       items.map((m, i) => ({ ...m, order: i + 1 })),

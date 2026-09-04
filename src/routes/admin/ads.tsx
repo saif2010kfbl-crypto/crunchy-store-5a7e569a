@@ -88,7 +88,7 @@ function AdminAds() {
                   <input
                     type="date"
                     value={a.startsAt ?? ""}
-                    onChange={(e) => update(a.id, { startsAt: e.target.value || undefined })}
+                    onChange={(e) => update(a.id, { startsAt: e.target.value })}
                     className={fieldClass}
                   />
                 </label>
@@ -99,7 +99,7 @@ function AdminAds() {
                   <input
                     type="date"
                     value={a.endsAt ?? ""}
-                    onChange={(e) => update(a.id, { endsAt: e.target.value || undefined })}
+                    onChange={(e) => update(a.id, { endsAt: e.target.value })}
                     className={fieldClass}
                   />
                 </label>
