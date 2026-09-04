@@ -37,15 +37,31 @@ export const Route = createFileRoute("/p/$slug")({
 function ProductPage() {
   const { product, related } = Route.useLoaderData();
   const detailsRef = useRef<HTMLDivElement>(null);
-  const [scrolled, setScrolled] = useState(false);
+  // 0 = details fully visible, 1 = fully faded. Driven continuously by scroll
+  // position so the details fade gradually instead of snapping away.
+  const [progress, setProgress] = useState(0);
   const sold = product.status === "sold";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 180);
+    let raf = 0;
+    const FADE_START = 120;
+    const FADE_END = 520;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        setProgress(Math.min(1, Math.max(0, (y - FADE_START) / (FADE_END - FADE_START))));
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
+
+  const scrolled = progress >= 1;
 
   return (
     <div className="min-h-screen bg-background pb-28">
@@ -71,11 +87,11 @@ function ProductPage() {
         <div
           ref={detailsRef}
           style={{
-            opacity: scrolled ? 0 : 1,
-            transform: scrolled ? "translateY(-8px)" : "none",
-            pointerEvents: scrolled ? "none" : "auto",
+            opacity: 1 - progress,
+            transform: `translateY(${-16 * progress}px)`,
+            pointerEvents: progress > 0.6 ? "none" : "auto",
           }}
-          className="space-y-4 transition-all duration-500 ease-out"
+          className="space-y-4 will-change-transform"
         >
           <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
             <div className="min-w-0">
@@ -106,8 +122,8 @@ function ProductPage() {
 
         <section
           aria-label="منتجات ذات صلة"
-          style={{ opacity: scrolled ? 1 : 0.35 }}
-          className="space-y-3 transition-opacity duration-500 ease-out"
+          style={{ opacity: 0.35 + 0.65 * progress }}
+          className="space-y-3"
         >
           <h2 className="text-base font-extrabold tracking-tight">منتجات ذات صلة</h2>
           <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">

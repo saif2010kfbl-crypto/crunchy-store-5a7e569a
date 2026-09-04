@@ -10,13 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as SoldRouteImport } from './routes/sold'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminAdsRouteImport } from './routes/admin/ads'
+import { Route as AdminOrdersRouteImport } from './routes/admin/orders'
+import { Route as AdminProductsRouteImport } from './routes/admin/products'
+import { Route as AdminSectionsRouteImport } from './routes/admin/sections'
 import { Route as PSlugRouteImport } from './routes/p.$slug'
+import { Route as AdminProductsIdRouteImport } from './routes/admin/products.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GamesRoute = GamesRouteImport.update({
@@ -29,41 +41,125 @@ const SoldRoute = SoldRouteImport.update({
   path: '/sold',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdsRoute = AdminAdsRouteImport.update({
+  id: '/ads',
+  path: '/ads',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminOrdersRoute = AdminOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminProductsRoute = AdminProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminSectionsRoute = AdminSectionsRouteImport.update({
+  id: '/sections',
+  path: '/sections',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const PSlugRoute = PSlugRouteImport.update({
   id: '/p/$slug',
   path: '/p/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminProductsIdRoute = AdminProductsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminProductsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/games': typeof GamesRoute
   '/sold': typeof SoldRoute
+  '/admin/ads': typeof AdminAdsRoute
+  '/admin/orders': typeof AdminOrdersRoute
+  '/admin/products': typeof AdminProductsRouteWithChildren
+  '/admin/sections': typeof AdminSectionsRoute
   '/p/$slug': typeof PSlugRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/products/$id': typeof AdminProductsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/games': typeof GamesRoute
   '/sold': typeof SoldRoute
+  '/admin/ads': typeof AdminAdsRoute
+  '/admin/orders': typeof AdminOrdersRoute
+  '/admin/products': typeof AdminProductsRouteWithChildren
+  '/admin/sections': typeof AdminSectionsRoute
   '/p/$slug': typeof PSlugRoute
+  '/admin': typeof AdminIndexRoute
+  '/admin/products/$id': typeof AdminProductsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/games': typeof GamesRoute
   '/sold': typeof SoldRoute
+  '/admin/ads': typeof AdminAdsRoute
+  '/admin/orders': typeof AdminOrdersRoute
+  '/admin/products': typeof AdminProductsRouteWithChildren
+  '/admin/sections': typeof AdminSectionsRoute
   '/p/$slug': typeof PSlugRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/products/$id': typeof AdminProductsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/games' | '/sold' | '/p/$slug'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/games'
+    | '/sold'
+    | '/admin/ads'
+    | '/admin/orders'
+    | '/admin/products'
+    | '/admin/sections'
+    | '/p/$slug'
+    | '/admin/'
+    | '/admin/products/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/games' | '/sold' | '/p/$slug'
-  id: '__root__' | '/' | '/games' | '/sold' | '/p/$slug'
+  to:
+    | '/'
+    | '/games'
+    | '/sold'
+    | '/admin/ads'
+    | '/admin/orders'
+    | '/admin/products'
+    | '/admin/sections'
+    | '/p/$slug'
+    | '/admin'
+    | '/admin/products/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/games'
+    | '/sold'
+    | '/admin/ads'
+    | '/admin/orders'
+    | '/admin/products'
+    | '/admin/sections'
+    | '/p/$slug'
+    | '/admin/'
+    | '/admin/products/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
   GamesRoute: typeof GamesRoute
   SoldRoute: typeof SoldRoute
   PSlugRoute: typeof PSlugRoute
@@ -76,6 +172,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/games': {
@@ -92,6 +195,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SoldRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/ads': {
+      id: '/admin/ads'
+      path: '/ads'
+      fullPath: '/admin/ads'
+      preLoaderRoute: typeof AdminAdsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/orders': {
+      id: '/admin/orders'
+      path: '/orders'
+      fullPath: '/admin/orders'
+      preLoaderRoute: typeof AdminOrdersRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/products': {
+      id: '/admin/products'
+      path: '/products'
+      fullPath: '/admin/products'
+      preLoaderRoute: typeof AdminProductsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/sections': {
+      id: '/admin/sections'
+      path: '/sections'
+      fullPath: '/admin/sections'
+      preLoaderRoute: typeof AdminSectionsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/p/$slug': {
       id: '/p/$slug'
       path: '/p/$slug'
@@ -99,11 +237,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/products/$id': {
+      id: '/admin/products/$id'
+      path: '/$id'
+      fullPath: '/admin/products/$id'
+      preLoaderRoute: typeof AdminProductsIdRouteImport
+      parentRoute: typeof AdminProductsRoute
+    }
   }
 }
 
+interface AdminProductsRouteChildren {
+  AdminProductsIdRoute: typeof AdminProductsIdRoute
+}
+
+const AdminProductsRouteChildren: AdminProductsRouteChildren = {
+  AdminProductsIdRoute: AdminProductsIdRoute,
+}
+
+const AdminProductsRouteWithChildren = AdminProductsRoute._addFileChildren(
+  AdminProductsRouteChildren,
+)
+
+interface AdminRouteRouteChildren {
+  AdminAdsRoute: typeof AdminAdsRoute
+  AdminOrdersRoute: typeof AdminOrdersRoute
+  AdminProductsRoute: typeof AdminProductsRouteWithChildren
+  AdminSectionsRoute: typeof AdminSectionsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminAdsRoute: AdminAdsRoute,
+  AdminOrdersRoute: AdminOrdersRoute,
+  AdminProductsRoute: AdminProductsRouteWithChildren,
+  AdminSectionsRoute: AdminSectionsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
   GamesRoute: GamesRoute,
   SoldRoute: SoldRoute,
   PSlugRoute: PSlugRoute,

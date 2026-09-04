@@ -356,7 +356,7 @@ export const paymentMethods: PaymentMethod[] = [
     name: "Zain Cash",
     description: "تحويل عبر محفظة Zain Cash مع إرسال إشعار التحويل.",
     enabled: true,
-    transferDetails: "الاسم: Game Market\nالرقم: 07800000000",
+    transferDetails: "الاسم: Crunchy Store\nالرقم: 07800000000",
   },
   {
     id: "on_contact",
